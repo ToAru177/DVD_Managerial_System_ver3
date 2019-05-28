@@ -1,0 +1,27 @@
+﻿  0_question.c
+  20190311.c
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\20190311.c(13): warning C4013: 'Txtload_CusList'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\20190311.c(14): warning C4013: 'Txtload_DVDList'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\20190311.c(15): warning C4013: 'Txtload_RentList'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\20190311.c(45): warning C4013: 'Txtupload_CusList'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\20190311.c(46): warning C4013: 'Txtupload_DVDList'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\20190311.c(47): warning C4013: 'Txtupload_RentList'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  cusInfoAccess.c
+  dvdInfoAccess.c
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\dvdinfoaccess.c(132): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
+  c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\dvdinfoaccess.c(132): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
+  manager.c
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\manager.c(26): warning C4013: 'gets'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\manager.c(357): warning C4047: '함수': 'char *'의 간접 참조 수준이 'char (*)[30]'과(와) 다릅니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\manager.c(357): warning C4024: 'fgets': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+  screenOut.c
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(36): warning C4013: 'RegisterCustomer'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(40): warning C4013: 'SearchCusInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(65): warning C4013: 'RegistDVD'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(69): warning C4013: 'SearchDVDInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(94): warning C4013: 'RentDVD'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(98): warning C4013: 'ReturnDVD'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(123): warning C4013: 'SearchRentDVDInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+c:\users\301-08\desktop\iot\iot_c\20190312_finish_ver3\20190312_finish_ver3\screenout.c(127): warning C4013: 'SearchRentUserInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  코드를 생성하고 있습니다...
+  20190312_Finish_ver3.vcxproj -> C:\Users\301-08\Desktop\IoT\IoT_C\20190312_Finish_ver3\Debug\20190312_Finish_ver3.exe
