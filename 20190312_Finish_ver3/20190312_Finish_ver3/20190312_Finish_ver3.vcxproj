@@ -23,6 +23,7 @@
     <ClCompile Include="20190311.c" />
     <ClCompile Include="cusInfoAccess.c" />
     <ClCompile Include="dvdInfoAccess.c" />
+    <ClCompile Include="LinkedList.c" />
     <ClCompile Include="manager.c" />
     <ClCompile Include="screenOut.c" />
   </ItemGroup>
@@ -32,6 +33,7 @@
     <ClInclude Include="cusInfoAccess.h" />
     <ClInclude Include="dvdInfo.h" />
     <ClInclude Include="dvdInfoAccess.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="screenOut.h" />
   </ItemGroup>
