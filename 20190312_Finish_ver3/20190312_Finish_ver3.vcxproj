@@ -20,21 +20,36 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="0_question.c" />
-    <ClCompile Include="20190311.c" />
+    <ClCompile Include="Main.c" />
     <ClCompile Include="cusInfoAccess.c" />
-    <ClCompile Include="dvdInfoAccess.c" />
-    <ClCompile Include="LinkedList.c" />
+    <ClCompile Include="CusLinkedList.c" />
+    <ClCompile Include="dvdInfoAccess.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="DVDLinkedList.c" />
+    <ClCompile Include="LinkedList.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="manager.c" />
-    <ClCompile Include="screenOut.c" />
+    <ClCompile Include="RentInfoAccess.c" />
+    <ClCompile Include="RentLinkedList.c" />
+    <ClCompile Include="screenOut.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="cusInfo.h" />
     <ClInclude Include="cusInfoAccess.h" />
+    <ClInclude Include="CusLinkedList.h" />
     <ClInclude Include="dvdInfo.h" />
     <ClInclude Include="dvdInfoAccess.h" />
+    <ClInclude Include="DVDLinkedList.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="RentInfo.h" />
+    <ClInclude Include="RentInfoAccess.h" />
+    <ClInclude Include="RentLinkedList.h" />
     <ClInclude Include="screenOut.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

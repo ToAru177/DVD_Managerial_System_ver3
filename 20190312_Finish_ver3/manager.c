@@ -1,20 +1,13 @@
 #include "common.h"
-#include "cusInfo.h"
-#include "dvdInfo.h"
 #include "cusInfoAccess.h"
 #include "dvdInfoAccess.h"
 #include "screenOut.h"
-
-cusInfo *Head = NULL;
-dvdInfo *DVD_Head = NULL;
-dvdRentInfo *Rent_Head = NULL;
-
-static int NumOfCusInfo = 0;
-static int NumOfDVDInfo = 0;
-static int NumOfRentInfo = 0;
+#include "CusLinkedList.h"
+#include "DVDLinkedList.h"
+#include "RentLinkedList.h"
 
 // 회원 가입 
-void RegisterCustomer(void)
+void RegisterCustomer(CusList *cusList)
 {
 	char ID[ID_LEN];
 	char name[NAME_LEN];
@@ -25,32 +18,36 @@ void RegisterCustomer(void)
 	printf("\t\tID 입력 : ");
 	gets(ID);
 
-	if (IsregistID(Head, ID))
+	if (cusList->numOfData != 0)
 	{
-		puts("\t\t해당 ID는 사용중입니다.");
-		printf("\t\t=============================\n");
-		getchar();
-		return;
-	}
+		if (!IsregistID(cusList, ID)) {
 
+			puts("\t\t해당 ID는 사용중입니다.");
+			printf("\t\t=============================\n");
+			getchar();
+			return;
+		}
+	}
+	
 	printf("\t\t이름 입력 : ");
 	gets(name);
 
 	printf("\t\t전화번호 입력 : ");
 	gets(phoneNum);
 
-	AddCusInfo(&Head, ID, name, phoneNum);
+	AddCusInfo(cusList, ID, name, phoneNum);
 
 	puts("\t\t회원 가입이 되었습니다.");
 	printf("\t\t=============================\n");
 	getchar();
 }
 
+
 // 회원 조회
-void SearchCusInfo(void)
+void SearchCusInfo(CusList *cusList)
 {
 	char ID[ID_LEN];
-	cusInfo * cusPtr;
+	cusInfo *cus;
 
 	system("cls");
 
@@ -58,20 +55,30 @@ void SearchCusInfo(void)
 	printf("\t\t찾을 ID 입력 : ");
 	gets(ID);
 
-	cusPtr = GetCusPtrByID(Head, ID);
-	if (cusPtr == 0)
-	{
-		puts("\t\t존재하지 않는 ID입니다.");
-		printf("\t\t=============================\n");
-		getchar();
-		return;
-	}
 
-	ShowCustomerInfo(cusPtr);
+	if (CusLFirst(cusList, &cus)) {
+		if (!IDCompare(cus, ID)) {
+			ShowCustomerInfo(cus);
+			return;
+		}
+
+		while (CusLNext(cusList, &cus))
+			if (!IDCompare(cus, ID)) {
+				ShowCustomerInfo(cus);
+				return;
+			}
+	}
+	
+	printf("\t\t=============================\n");
+	printf("\t\t존재하지 않는 ID 입니다.\n");
+	printf("\t\t=============================\n");	
+	getchar();
+	
 }
 
+
 // DVD 등록
-void RegistDVD(void)
+void RegistDVD(DVDList *dvdList)
 {
 	char ISBN[ISBN_LEN];
 	char title[TITLE_LEN];
@@ -84,12 +91,15 @@ void RegistDVD(void)
 	printf("\t\tISBN 입력 : ");
 	gets(ISBN);
 
-	if (IsRegistISBN(DVD_Head, ISBN))
+	if (dvdList->numOfData != 0)
 	{
-		puts("\t\t해당 ISBN은 이미 등록되었습니다.");
-		printf("\t\t============================================\n");
-		getchar();
-		return;
+		if (!IsRegistISBN(dvdList, ISBN)) {
+
+			puts("\t\t해당 ISBN은 이미 등록되었습니다.");
+			printf("\t\t============================================\n");
+			getchar();
+			return;
+		}
 	}
 
 	printf("\t\t제목 입력 : ");
@@ -99,7 +109,7 @@ void RegistDVD(void)
 	scanf("%d", &genre);
 	getchar();
 
-	AddDVDInfo(&DVD_Head, ISBN, title, genre);
+	AddDVDInfo(dvdList, ISBN, title, genre);
 
 	puts("\t\t등록이 완료되었습니다.");
 	printf("\t\t============================================\n");
@@ -107,7 +117,7 @@ void RegistDVD(void)
 }
 
 // DVD 조회
-void SearchDVDInfo(void)
+void SearchDVDInfo(DVDList *dvdList)
 {
 	char ISBN[ISBN_LEN];
 	dvdInfo *dvdPtr;
@@ -120,20 +130,29 @@ void SearchDVDInfo(void)
 	printf("\t\t찾는 ISBN 입력 : ");
 	gets(ISBN);
 
-	dvdPtr = GetDVDPtrByISBN(DVD_Head, ISBN);
-	if (dvdPtr == 0)
-	{
-		puts("\t\t등록되지 않은 ISBN입니다.");
-		printf("\t\t============================================\n");
-		getchar();
-		return;
+
+	if (DVDLFirst(dvdList, &dvdPtr)) {
+		if (!IDCompare(dvdPtr, ISBN)) {
+			ShowDVDInfo(dvdPtr);
+			return;
+		}
+
+		while (DVDLNext(dvdList, &dvdPtr))
+			if (!IDCompare(dvdPtr, ISBN)) {
+				ShowDVDInfo(dvdPtr);
+				return;
+			}
 	}
 
-	ShowDVDInfo(dvdPtr);
+	printf("\t\t============================================\n");
+	puts("\t\t등록되지 않은 ISBN입니다.");
+	printf("\t\t============================================\n");
+	getchar();
 }
 
+
 // DVD 대여
-void RentDVD(void) {
+void RentDVD(RentList *rentList) {
 	char ISBN[ISBN_LEN];
 	char ID[ID_LEN];
 	int day;
@@ -192,7 +211,7 @@ void RentDVD(void) {
 }
 
 // DVD 반납
-void ReturnDVD(void) {
+void ReturnDVD(RentList *rentList) {
 	char ISBN[ISBN_LEN];
 	dvdInfo *dvdPtr;
 	int state;
@@ -232,7 +251,8 @@ void ReturnDVD(void) {
 
 }
 
-// 대역내역 죄회 - ISBN
+/*
+// 대역내역 조회 - ISBN
 void SearchRentDVDInfo(void) {
 	char ISBN[ISBN_LEN];
 	dvdInfo *dvdPtr;
@@ -516,3 +536,4 @@ void Txtupload_RentList(void) {
 
 	return;
 }
+*/

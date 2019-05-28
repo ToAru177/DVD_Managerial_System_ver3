@@ -1,7 +1,11 @@
 #include "common.h"
 #include "cusInfo.h"
 #include "dvdInfo.h"
+#include "RentInfo.h"
 #include "screenOut.h"
+#include "CusLinkedList.h"
+#include "DVDLinkedList.h"
+#include "RentLinkedList.h"
 
 void ShowMenu(void)
 {
@@ -17,7 +21,7 @@ void ShowMenu(void)
 	printf("\t\t 선택 >> ");
 }
 
-void ShowCusMenu(void)
+void ShowCusMenu(CusList *cusList)
 {
 	int sel;
 
@@ -33,11 +37,11 @@ void ShowCusMenu(void)
 	getchar();
 	switch (sel) {
 	case 1:
-		RegisterCustomer();
+		RegisterCustomer(cusList);
 		break;
 
 	case 2:
-		SearchCusInfo();
+		SearchCusInfo(cusList);
 		break;
 
 	case 3:
@@ -46,7 +50,7 @@ void ShowCusMenu(void)
 	}
 }
 
-void ShowDVDMenu(void)
+void ShowDVDMenu(DVDList *dvdList)
 {
 	int sel;
 
@@ -62,11 +66,11 @@ void ShowDVDMenu(void)
 	getchar();
 	switch (sel) {
 	case 1:
-		RegistDVD();
+		RegistDVD(dvdList);
 		break;
 
 	case 2:
-		SearchDVDInfo();
+		SearchDVDInfo(dvdList);
 		break;
 
 	case 3:
@@ -75,7 +79,7 @@ void ShowDVDMenu(void)
 	}
 }
 
-void ShowDVDRentMenu(void)
+void ShowDVDRentMenu(RentList *rentList)
 {
 	int sel;
 
@@ -91,11 +95,11 @@ void ShowDVDRentMenu(void)
 	getchar();
 	switch(sel) {
 	case 1:
-		RentDVD();
+		RentDVD(rentList);
 		break;
 
 	case 2:
-		ReturnDVD();
+		ReturnDVD(rentList);
 		break;
 
 	case 3:
@@ -105,40 +109,40 @@ void ShowDVDRentMenu(void)
 }
 
 
-void ShowSearchMenu(void)
+//void ShowSearchMenu(void)
+//{
+//	int sel;
+//	system("cls"); //stdlib.h
+//
+//	printf("\t\t======= 대여 정보 조회 ======\n");
+//	printf("\t\t 1. ISBN 대여 기록 \n");
+//	printf("\t\t 2. User 대여 기록 \n");
+//	printf("\t\t 3. 이전으로 \n");
+//	printf("\t\t=============================\n");
+//	printf("\t\t 선택 >> ");
+//	scanf("%d", &sel);
+//	getchar();
+//	switch (sel) {
+//	case 1:
+//		SearchRentDVDInfo();
+//		break;
+//
+//	case 2:
+//		SearchRentUserInfo();
+//		break;
+//
+//	case 3:
+//		return;
+//		break;
+//	}
+//}
+
+void ShowCustomerInfo(cusInfo *pcus)
 {
-	int sel;
-	system("cls"); //stdlib.h
-
-	printf("\t\t======= 대여 정보 조회 ======\n");
-	printf("\t\t 1. ISBN 대여 기록 \n");
-	printf("\t\t 2. User 대여 기록 \n");
-	printf("\t\t 3. 이전으로 \n");
 	printf("\t\t=============================\n");
-	printf("\t\t 선택 >> ");
-	scanf("%d", &sel);
-	getchar();
-	switch (sel) {
-	case 1:
-		SearchRentDVDInfo();
-		break;
-
-	case 2:
-		SearchRentUserInfo();
-		break;
-
-	case 3:
-		return;
-		break;
-	}
-}
-
-void ShowCustomerInfo(cusInfo * pCus)
-{
-	printf("\t\t=============================\n");
-	printf("\t\t ID : %s \n", pCus->ID);
-	printf("\t\t Name : %s \n", pCus->name);
-	printf("\t\t Phone : %s \n", pCus->phoneNum);
+	printf("\t\t ID : %s \n", pcus->ID);
+	printf("\t\t Name : %s \n", pcus->name);
+	printf("\t\t Phone : %s \n", pcus->phoneNum);
 	printf("\t\t=============================\n");
 
 	getchar();
@@ -188,7 +192,7 @@ void ShowRentState(int rentState) {
 
 }
 
-void ShowRentInfo(dvdRentInfo *pDVD) {
+void ShowRentInfo(RentInfo *pDVD) {
 	printf("\t\t 고객 ID : %s\n", pDVD->cusID);
 	printf("\t\t 고객 이름 : %s\n", pDVD->cusName);
 	printf("\t\t 고객 폰 번호 : %s\n", pDVD->cusPhoneNum);
@@ -196,7 +200,7 @@ void ShowRentInfo(dvdRentInfo *pDVD) {
 	printf("\t\t============================================\n");
 }
 
-void ShowRentInfoUser(dvdRentInfo *pDVD) {
+void ShowRentInfoUser(RentInfo *pDVD) {
 
 	printf("\t\t ISBN : %s\n", pDVD->ISBN_NUM);
 

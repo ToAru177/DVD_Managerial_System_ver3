@@ -12,10 +12,9 @@ typedef struct cusInfo
 	char name[NAME_LEN];
 	char phoneNum[PHONE_LEN];
 
-	struct cusInfo *next;
+	//struct cusInfo *next;
 
 } cusInfo;
-
 
 
 #endif // !__CUSINFO_H__

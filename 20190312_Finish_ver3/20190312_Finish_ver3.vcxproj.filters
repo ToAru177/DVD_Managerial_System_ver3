@@ -13,18 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Customer">
+      <UniqueIdentifier>{ef6fbef7-f94a-40d3-8bc6-0d688bd5fa3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DVD">
+      <UniqueIdentifier>{130a9b25-2b35-4e77-9251-203b69371f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Customer">
+      <UniqueIdentifier>{032303f5-6184-4794-8f36-60b253685b86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DVD">
+      <UniqueIdentifier>{34828232-f53e-4518-87b7-6a04ef50f022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DVDRental">
+      <UniqueIdentifier>{49e727f3-2b41-4682-9d99-d7184ee601ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Rental">
+      <UniqueIdentifier>{7d5da4f9-d049-4904-90c9-4b4076fcc3f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="0_question.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="20190311.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="cusInfoAccess.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="dvdInfoAccess.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="manager.c">
@@ -36,21 +45,30 @@
     <ClCompile Include="LinkedList.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="cusInfoAccess.c">
+      <Filter>소스 파일\Customer</Filter>
+    </ClCompile>
+    <ClCompile Include="CusLinkedList.c">
+      <Filter>소스 파일\Customer</Filter>
+    </ClCompile>
+    <ClCompile Include="DVDLinkedList.c">
+      <Filter>소스 파일\DVD</Filter>
+    </ClCompile>
+    <ClCompile Include="dvdInfoAccess.c">
+      <Filter>소스 파일\DVD</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RentLinkedList.c">
+      <Filter>소스 파일\Rental</Filter>
+    </ClCompile>
+    <ClCompile Include="RentInfoAccess.c">
+      <Filter>소스 파일\Rental</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="cusInfo.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="cusInfoAccess.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="dvdInfo.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="dvdInfoAccess.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="manager.h">
@@ -61,6 +79,33 @@
     </ClInclude>
     <ClInclude Include="LinkedList.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="cusInfo.h">
+      <Filter>헤더 파일\Customer</Filter>
+    </ClInclude>
+    <ClInclude Include="cusInfoAccess.h">
+      <Filter>헤더 파일\Customer</Filter>
+    </ClInclude>
+    <ClInclude Include="CusLinkedList.h">
+      <Filter>헤더 파일\Customer</Filter>
+    </ClInclude>
+    <ClInclude Include="dvdInfo.h">
+      <Filter>헤더 파일\DVD</Filter>
+    </ClInclude>
+    <ClInclude Include="dvdInfoAccess.h">
+      <Filter>헤더 파일\DVD</Filter>
+    </ClInclude>
+    <ClInclude Include="DVDLinkedList.h">
+      <Filter>헤더 파일\DVD</Filter>
+    </ClInclude>
+    <ClInclude Include="RentInfo.h">
+      <Filter>헤더 파일\DVDRental</Filter>
+    </ClInclude>
+    <ClInclude Include="RentLinkedList.h">
+      <Filter>헤더 파일\DVDRental</Filter>
+    </ClInclude>
+    <ClInclude Include="RentInfoAccess.h">
+      <Filter>헤더 파일\DVDRental</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
