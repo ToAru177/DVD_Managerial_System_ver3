@@ -2,8 +2,6 @@
 #include "cusInfo.h"
 #include "CusLinkedList.h"
 
-#define MAX_CUSTOMER 100
-
 cusInfo *MakeCusNode(char *ID, char *name, char *phone) {
 	cusInfo *newCus = (cusInfo *)malloc(sizeof(cusInfo));
 	strcpy(newCus->ID, ID);

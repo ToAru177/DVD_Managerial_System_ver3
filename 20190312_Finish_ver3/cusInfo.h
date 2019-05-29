@@ -12,8 +12,6 @@ typedef struct cusInfo
 	char name[NAME_LEN];
 	char phoneNum[PHONE_LEN];
 
-	//struct cusInfo *next;
-
 } cusInfo;
 
 

@@ -4,7 +4,6 @@
 #include "dvdInfoAccess.h"
 #include "DVDLinkedList.h"
 
-
 dvdInfo *MakeDVDNode(char * ISBN, char * title, int genre) {
 	dvdInfo *newDVD = (dvdInfo *)malloc(sizeof(dvdInfo));
 	strcpy(newDVD->ISBN, ISBN);
@@ -14,7 +13,6 @@ dvdInfo *MakeDVDNode(char * ISBN, char * title, int genre) {
 
 	return newDVD;
 }
-
 
 void AddDVDInfo(DVDList *dvdList, char * ISBN, char * title, int genre)
 {

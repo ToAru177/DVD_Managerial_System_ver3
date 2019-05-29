@@ -79,7 +79,7 @@ void ShowDVDMenu(DVDList *dvdList)
 	}
 }
 
-void ShowDVDRentMenu(RentList *rentList)
+void ShowDVDRentMenu(RentList *rentList, DVDList *dvdList, CusList *cusList)
 {
 	int sel;
 
@@ -95,11 +95,11 @@ void ShowDVDRentMenu(RentList *rentList)
 	getchar();
 	switch(sel) {
 	case 1:
-		RentDVD(rentList);
+		RentDVD(rentList, dvdList, cusList);
 		break;
 
 	case 2:
-		ReturnDVD(rentList);
+		ReturnDVD(rentList, dvdList);
 		break;
 
 	case 3:
@@ -108,34 +108,33 @@ void ShowDVDRentMenu(RentList *rentList)
 	}
 }
 
+void ShowSearchMenu(RentList *rentList, DVDList *dvdList, CusList *cusList)
+{
+	int sel;
+	system("cls"); //stdlib.h
 
-//void ShowSearchMenu(void)
-//{
-//	int sel;
-//	system("cls"); //stdlib.h
-//
-//	printf("\t\t======= 대여 정보 조회 ======\n");
-//	printf("\t\t 1. ISBN 대여 기록 \n");
-//	printf("\t\t 2. User 대여 기록 \n");
-//	printf("\t\t 3. 이전으로 \n");
-//	printf("\t\t=============================\n");
-//	printf("\t\t 선택 >> ");
-//	scanf("%d", &sel);
-//	getchar();
-//	switch (sel) {
-//	case 1:
-//		SearchRentDVDInfo();
-//		break;
-//
-//	case 2:
-//		SearchRentUserInfo();
-//		break;
-//
-//	case 3:
-//		return;
-//		break;
-//	}
-//}
+	printf("\t\t======= 대여 정보 조회 ======\n");
+	printf("\t\t 1. ISBN 대여 기록 \n");
+	printf("\t\t 2. User 대여 기록 \n");
+	printf("\t\t 3. 이전으로 \n");
+	printf("\t\t=============================\n");
+	printf("\t\t 선택 >> ");
+	scanf("%d", &sel);
+	getchar();
+	switch (sel) {
+	case 1:
+		SearchRentDVDInfo(rentList, dvdList);
+		break;
+
+	case 2:
+		SearchRentUserInfo(rentList, cusList);
+		break;
+
+	case 3:
+		return;
+		break;
+	}
+}
 
 void ShowCustomerInfo(cusInfo *pcus)
 {
@@ -181,15 +180,10 @@ void ShowGenre(int gen)
 }
 
 void ShowRentState(int rentState) {
-
-	if (rentState == RENTED) {
+	if (rentState == RENTED)
 		printf("대여 중(대여 불가)\n");
-	}
-
-	else{
+	else
 		printf("대여 가능\n");
-	}
-
 }
 
 void ShowRentInfo(RentInfo *pDVD) {
@@ -201,7 +195,5 @@ void ShowRentInfo(RentInfo *pDVD) {
 }
 
 void ShowRentInfoUser(RentInfo *pDVD) {
-
 	printf("\t\t ISBN : %s\n", pDVD->ISBN_NUM);
-
 }

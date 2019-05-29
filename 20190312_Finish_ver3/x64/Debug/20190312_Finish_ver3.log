@@ -1,5 +1,28 @@
-﻿  manager.c
-d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(19): warning C4013: 'gets'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(135): warning C4133: '함수': 'dvdInfo *'과(와) 'cusInfo *' 사이의 형식이 호환되지 않습니다.
-d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(141): warning C4133: '함수': 'dvdInfo *'과(와) 'cusInfo *' 사이의 형식이 호환되지 않습니다.
+﻿  Main.c
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\main.c(51): warning C4013: 'ShowSearchMenu'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  RentInfoAccess.c
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\rentinfoaccess.c(47): warning C4013: 'ShowRentInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\rentinfoaccess.c(68): warning C4013: 'ShowRentInfoUser'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\rentinfoaccess.c(77): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
+  d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\rentinfoaccess.c(77): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
+  manager.c
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(20): warning C4013: 'gets'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(133): warning C4013: 'ISBNCompare'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(251): warning C4101: 'rentPtr' :참조되지 않은 지역 변수입니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(250): warning C4101: 'dvdPtr' :참조되지 않은 지역 변수입니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(354): warning C4047: '함수': 'char *'의 간접 참조 수준이 'char (*)[50]'과(와) 다릅니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\manager.c(354): warning C4024: 'fgets': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+  코드를 생성하고 있습니다...
+  dvdInfoAccess.c
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\dvdinfoaccess.c(30): warning C4013: 'ISBNCompare'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  screenOut.c
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(42): warning C4013: 'RegisterCustomer'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(46): warning C4013: 'SearchCusInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(72): warning C4013: 'RegistDVD'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(76): warning C4013: 'SearchDVDInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(102): warning C4013: 'RentDVD'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(106): warning C4013: 'ReturnDVD'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(131): warning C4013: 'SearchRentDVDInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+d:\git\dvd_managerial_system_ver3\20190312_finish_ver3\screenout.c(135): warning C4013: 'SearchRentUserInfo'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  코드를 생성하고 있습니다...
   20190312_Finish_ver3.vcxproj -> D:\Git\DVD_Managerial_System_ver3\x64\Debug\20190312_Finish_ver3.exe

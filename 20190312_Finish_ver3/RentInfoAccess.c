@@ -2,11 +2,15 @@
 #include "RentInfoAccess.h"
 #include "RentLinkedList.h"
 
-RentInfo *MakeRentNode(void) {
-	RentInfo *tmp = (RentInfo *)malloc(sizeof(RentInfo));
-	tmp->next = NULL;
+RentInfo *MakeRentNode(dvdInfo *dvdPtr, cusInfo *cusPtr, int day) {
+	RentInfo *newRent = (RentInfo *)malloc(sizeof(RentInfo));
+	strcpy(newRent->ISBN_NUM, dvdPtr->ISBN);
+	strcpy(newRent->cusID, cusPtr->ID);
+	strcpy(newRent->cusName, cusPtr->name);
+	strcpy(newRent->cusPhoneNum, cusPtr->phoneNum);
+	newRent->rentDay = day;
 
-	return tmp;
+	return newRent;
 }
 
 int RentDVDState(dvdInfo *dvdPtr) {
@@ -19,54 +23,54 @@ int RentDVDState(dvdInfo *dvdPtr) {
 	}
 }
 
-void AddRentListInfo(RentInfo **Rent_Head, dvdInfo *dvdPtr, cusInfo *cusPtr,int day) {
+void AddRentListInfo(RentList *rentList, dvdInfo *dvdPtr, cusInfo *cusPtr,int day) {
 
-	if ((*Rent_Head) == NULL) {
-		*Rent_Head = MakeRentNode();
-
-		strcpy((*Rent_Head)->ISBN_NUM, dvdPtr->ISBN);
-		strcpy((*Rent_Head)->cusID, cusPtr->ID);
-		strcpy((*Rent_Head)->cusName, cusPtr->name);
-		strcpy((*Rent_Head)->cusPhoneNum, cusPtr->phoneNum);
-		(*Rent_Head)->rentDay = day;
-
-		return;
-	}
-
-	else {
-		AddRentListInfo(&(*Rent_Head)->next, dvdPtr, cusPtr, day);
-	}
+	RentInfo *newRent = MakeRentNode(dvdPtr, cusPtr, day);
+	RentLInsert(rentList, newRent);
 
 }
 
-void SearchRentInfo(RentInfo *Rent_Head, char *ISBN) {
-	RentInfo *temp = (RentInfo *)malloc(sizeof(RentInfo));
+int RentISBNCompare(RentInfo *prent, char *ISBN) {
+	return strcmp(prent->ISBN_NUM, ISBN);
+}
 
-	temp = Rent_Head;
+int RentIDCompare(RentInfo *prent, char *ID) {
+	return strcmp(prent->cusID, ID);
+}
 
-	while(temp != NULL) {
-		if (strcmp(temp->ISBN_NUM, ISBN) == 0) {
-			ShowRentInfo(temp);
+void SearchRentInfo(RentList *rentList, char *ISBN) {
+
+	RentInfo *rentPtr;
+
+	if (RentLFirst(rentList, &rentPtr)) {
+		if (!RentISBNCompare(rentPtr, ISBN)) {
+			ShowRentInfo(rentPtr);
+
 		}
-		temp = temp->next;
-	}
 
+		while (RentLNext(rentList, &rentPtr))
+			if (!RentISBNCompare(rentPtr, ISBN)) {
+				ShowRentInfo(rentPtr);
+			}
+	}
 }
 
-void SearchRentUserInfoByDays(RentInfo *Rent_Head, char *ID, int day1, int day2) {
+void SearchRentUserInfoByDays(RentList *rentList, char *ID, int day1, int day2) {
 	int day;
+	RentInfo *rentPtr;
 
 	for (day = day1; day <= day2; day++) {
 		printf("\t\t================== %d ================\n", day);
 
-		RentInfo *temp = (RentInfo *)malloc(sizeof(RentInfo));
-
-		temp = Rent_Head;
-		while(temp != NULL){
-			if ((strcmp(temp->cusID, ID) == 0) && (temp->rentDay == day)) {
-				ShowRentInfoUser(temp);
+		if (RentLFirst(rentList, &rentPtr)) {
+			if (!RentIDCompare(rentPtr, ID) && (rentPtr->rentDay == day)) {
+				ShowRentInfoUser(rentPtr);
 			}
-			temp = temp->next;
+
+			while (RentLNext(rentList, &rentPtr))
+				if (!RentIDCompare(rentPtr, ID) && (rentPtr->rentDay == day)) {
+					ShowRentInfoUser(rentPtr);
+				}
 		}
 	}
 	printf("\t\t============================================\n", day);

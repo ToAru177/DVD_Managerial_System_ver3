@@ -1,12 +1,12 @@
 #include "common.h"
 #include "cusInfoAccess.h"
 #include "dvdInfoAccess.h"
+#include "RentInfoAccess.h"
 #include "screenOut.h"
 #include "CusLinkedList.h"
 #include "DVDLinkedList.h"
 #include "RentLinkedList.h"
 
-// 회원 가입 
 void RegisterCustomer(CusList *cusList)
 {
 	char ID[ID_LEN];
@@ -42,8 +42,6 @@ void RegisterCustomer(CusList *cusList)
 	getchar();
 }
 
-
-// 회원 조회
 void SearchCusInfo(CusList *cusList)
 {
 	char ID[ID_LEN];
@@ -76,8 +74,6 @@ void SearchCusInfo(CusList *cusList)
 	
 }
 
-
-// DVD 등록
 void RegistDVD(DVDList *dvdList)
 {
 	char ISBN[ISBN_LEN];
@@ -116,7 +112,6 @@ void RegistDVD(DVDList *dvdList)
 	getchar();
 }
 
-// DVD 조회
 void SearchDVDInfo(DVDList *dvdList)
 {
 	char ISBN[ISBN_LEN];
@@ -130,15 +125,14 @@ void SearchDVDInfo(DVDList *dvdList)
 	printf("\t\t찾는 ISBN 입력 : ");
 	gets(ISBN);
 
-
 	if (DVDLFirst(dvdList, &dvdPtr)) {
-		if (!IDCompare(dvdPtr, ISBN)) {
+		if (!ISBNCompare(dvdPtr, ISBN)) {
 			ShowDVDInfo(dvdPtr);
 			return;
 		}
 
 		while (DVDLNext(dvdList, &dvdPtr))
-			if (!IDCompare(dvdPtr, ISBN)) {
+			if (!ISBNCompare(dvdPtr, ISBN)) {
 				ShowDVDInfo(dvdPtr);
 				return;
 			}
@@ -150,9 +144,7 @@ void SearchDVDInfo(DVDList *dvdList)
 	getchar();
 }
 
-
-// DVD 대여
-void RentDVD(RentList *rentList) {
+void RentDVD(RentList *rentList, DVDList *dvdList, CusList *cusList) {
 	char ISBN[ISBN_LEN];
 	char ID[ID_LEN];
 	int day;
@@ -164,30 +156,27 @@ void RentDVD(RentList *rentList) {
 
 	printf("\t\t================== DVD 대여 ================\n");
 
-
 	printf("\t\tID를 입력 : ");
 	gets(ID);
 
-	cusPtr = GetCusPtrByID(Head, ID);
-
-	if (cusPtr == NULL) {
+	if (IsregistID(cusList, ID) != 0) {
 		puts("\t\t입력된 ID로 가입된 고객이 없습니다.");
 		printf("\t\t============================================\n");
 		getchar();
 		return;
 	}
+	cusPtr = cusList->cur->data;
 
 	printf("\t\t대여할 ISBN 입력 : ");
 	gets(ISBN);
 
-	dvdPtr = GetDVDPtrByISBN(DVD_Head, ISBN);
-
-	if (dvdPtr == NULL) {
+	if (IsRegistISBN(dvdList, ISBN) != 0) {
 		puts("\t\t등록되지 않은 DVD ISBN입니다.");
 		printf("\t\t============================================\n");
 		getchar();
 		return;
 	}
+	dvdPtr = dvdList->cur->data;
 
 	state = RentDVDState(dvdPtr);
 
@@ -198,11 +187,11 @@ void RentDVD(RentList *rentList) {
 		return;
 	}
 
-	printf("\t\t대여일 입력(yyyymmmdd) : ");
+	printf("\t\t대여일 입력(yyyymmdd) : ");
 	scanf("%d", &day);
 	getchar();
 
-	AddRentListInfo(&Rent_Head, dvdPtr, cusPtr, day);
+	AddRentListInfo(rentList, dvdPtr, cusPtr, day);
 
 	puts("\t\t정상 대여 되었습니다.");
 	printf("\t\t============================================\n");
@@ -210,8 +199,7 @@ void RentDVD(RentList *rentList) {
 
 }
 
-// DVD 반납
-void ReturnDVD(RentList *rentList) {
+void ReturnDVD(RentList *rentList, DVDList *dvdList) {
 	char ISBN[ISBN_LEN];
 	dvdInfo *dvdPtr;
 	int state;
@@ -224,14 +212,13 @@ void ReturnDVD(RentList *rentList) {
 	printf("\t\t반납 할 ISBN 입력 : ");
 	gets(ISBN);
 
-	dvdPtr = GetDVDPtrByISBN(DVD_Head, ISBN);
-
-	if (dvdPtr == NULL) {
+	if (IsRegistISBN(dvdList, ISBN) != 0) {
 		puts("\t\t등록되지 않은 DVD ISBN입니다.");
 		printf("\t\t============================================\n");
 		getchar();
 		return;
 	}
+	dvdPtr = dvdList->cur->data;
 
 	state = RentDVDState(dvdPtr);
 
@@ -251,11 +238,10 @@ void ReturnDVD(RentList *rentList) {
 
 }
 
-/*
-// 대역내역 조회 - ISBN
-void SearchRentDVDInfo(void) {
+void SearchRentDVDInfo(RentList *rentList, DVDList *dvdList) {
 	char ISBN[ISBN_LEN];
 	dvdInfo *dvdPtr;
+	RentInfo *rentPtr;
 
 	system("cls");
 
@@ -263,24 +249,24 @@ void SearchRentDVDInfo(void) {
 
 	printf("\t\t조회 할 ISBN 입력 : ");
 	gets(ISBN);
-	dvdPtr = GetDVDPtrByISBN(DVD_Head, ISBN);
-
-	if (dvdPtr == NULL) {
+	
+	if (IsRegistISBN(dvdList, ISBN) != 0) {
 		puts("\t\t등록되지 않은 DVD ISBN입니다.");
 		printf("\t\t============================================\n");
 		getchar();
 		return;
 	}
+	//dvdPtr = dvdList->cur->data;
 
 	printf("\t\t============================================\n");
 
-	SearchRentInfo(Rent_Head, ISBN);
+	SearchRentInfo(rentList, ISBN);
+
 	getchar();
 
 }
 
-// 대여내역 조회 - ID
-void SearchRentUserInfo(void) {
+void SearchRentUserInfo(RentList *rentList, CusList *cusList) {
 	char ID[ID_LEN];
 	int day1, day2;
 	cusInfo *cusPtr;
@@ -292,14 +278,13 @@ void SearchRentUserInfo(void) {
 	printf("\t\tID 입력 : ");
 	gets(ID);
 
-	cusPtr = GetCusPtrByID(Head, ID);
-
-	if (cusPtr == NULL) {
+	if (IsregistID(cusList, ID) != 0) {
 		puts("\t\t입력된 ID로 가입된 고객이 없습니다.");
 		printf("\t\t============================================\n");
 		getchar();
 		return;
 	}
+	cusPtr = cusList->cur->data;
 
 	printf("\t\t대여 기간 입력(ex>> 20190315 20190320) : ");
 	scanf("%d %d", &day1, &day2);
@@ -307,15 +292,13 @@ void SearchRentUserInfo(void) {
 
 	printf("\t\t============================================\n");
 
-	SearchRentUserInfoByDays(Rent_Head, ID, day1, day2);
+	SearchRentUserInfoByDays(rentList, ID, day1, day2);
 
 	getchar();
 
 }
 
-
-// CusList 불러 오기
-void Txtload_CusList() {
+void Txtload_CusList(CusList *cusList) {
 	int res;
 	FILE *load = fopen("CusList.txt", "rt");
 
@@ -324,40 +307,24 @@ void Txtload_CusList() {
 		return;
 	}
 
-	cusInfo *MidNode = NULL;
+	cusInfo *loadNode;
 
 	while (1) {
-		MidNode = (cusInfo *)malloc(sizeof(cusInfo));
-		MidNode->next = NULL;
+		loadNode = (cusInfo *)malloc(sizeof(cusInfo));
 
-		res = fscanf(load, "%s %s %s\n", &MidNode->ID, &MidNode->name, &MidNode->phoneNum);
+		res = fscanf(load, "%s %s %s\n", &loadNode->ID, &loadNode->name, &loadNode->phoneNum);
 
 		if (res == EOF) {
 			break;
 		}
-		NumOfCusInfo++;
-
-		if (Head == NULL) {
-			Head = MidNode;
-		}
-
-		else {
-			cusInfo *temp = Head;
-			while (temp->next != NULL) {
-				temp = temp->next;
-			}
-			temp->next = MidNode;
-		}
-
+		CusLInsert(cusList, loadNode);
 	}
-
 }
 
-// DVDList 읽어 오기
-void Txtload_DVDList(void) {
+void Txtload_DVDList(DVDList *dvdList) {
 
 	int res;
-	dvdInfo *MidNode = NULL;
+	dvdInfo *loadNode;
 	FILE *load = fopen("DVDList.txt", "rt");
 	if (load == NULL) {
 		printf("DVDList 파일 읽기 실패\n");
@@ -365,40 +332,27 @@ void Txtload_DVDList(void) {
 	}
 
 	while (1) {
-		MidNode = (dvdInfo *)malloc(sizeof(dvdInfo));
-		MidNode->next = NULL;
+		loadNode = (dvdInfo *)malloc(sizeof(dvdInfo));
+
 		// DVDList.txt
 		// ISBN genre rentstate title 순으로 저장되어 있음
-		res = fscanf(load, "%s %d %d", &MidNode->ISBN, &MidNode->genre, &MidNode->rentState);
+		res = fscanf(load, "%s %d %d", &loadNode->ISBN, &loadNode->genre, &loadNode->rentState);
 
 		if (res == EOF) {
 			break;
 		}
-		fgets(&MidNode->title, TITLE_LEN, load);
+		fgets(&loadNode->title, TITLE_LEN, load);
 
-		NumOfDVDInfo++;
-
-		if (DVD_Head == NULL) {
-			DVD_Head = MidNode;
-		}
-
-		else {
-			dvdInfo *temp = DVD_Head;
-			while (temp->next != NULL) {
-				temp = temp->next;
-			}
-			temp->next = MidNode;
-		}
+		DVDLInsert(dvdList, loadNode);
 	}
-	return;
 
+	return;
 }
 
-// RentList 읽어 오기
-void Txtload_RentList(void) {
+void Txtload_RentList(RentList *rentList) {
 
 	int res;
-	dvdRentInfo *MidNode = NULL;
+	RentInfo *loadNode;
 	FILE *load = fopen("RentList.txt", "rt");
 
 	if (load == NULL) {
@@ -407,133 +361,76 @@ void Txtload_RentList(void) {
 	}
 
 	while (1) {
-		MidNode = (dvdRentInfo *)malloc(sizeof(dvdRentInfo));
-		MidNode->next = NULL;
+		loadNode = (RentInfo *)malloc(sizeof(RentInfo));
 
-		res = fscanf(load, "%s %s %s %s %d\n", &MidNode->cusID, &MidNode->cusName, &MidNode->cusPhoneNum, &MidNode->ISBN_NUM, &MidNode->rentDay);
+		res = fscanf(load, "%s %s %s %s %d\n", &loadNode->cusID, &loadNode->cusName, &loadNode->cusPhoneNum, &loadNode->ISBN_NUM, &loadNode->rentDay);
 		if (res == EOF) {
 			break;
 		}
-		NumOfRentInfo++;
-
-		if (Rent_Head == NULL) {
-			Rent_Head = MidNode;
-		}
-
-		else {
-			dvdRentInfo *temp = Rent_Head;
-			while (temp->next != NULL) {
-				temp = temp->next;
-			}
-			temp->next = MidNode;
-		}
-
+		RentLInsert(rentList, loadNode);
 	}
 	return;
 }
 
-// CusList 기록 하기
-void Txtupload_CusList() {
+void Txtupload_CusList(CusList *cusList) {
 
-	FILE *upload = fopen("CusList.txt", "a");
-	cusInfo *temp;
+	// 덮어 쓰기
+	FILE *upload = fopen("CusList.txt", "w");
+	cusInfo *uploadNode;
 
 	if (upload == NULL) {
 		printf("CusList 파일 생성 실패\n");
 		return;
 	}
 
-	temp = (cusInfo *)malloc(sizeof(cusInfo));
+	if (CusLFirst(cusList, &uploadNode)) {
+		fprintf(upload, "%s %s %s\n", uploadNode->ID, uploadNode->name, uploadNode->phoneNum);
 
-	temp = Head;
-
-	for (int i = 1; i <= NumOfCusInfo; i++) {
-		temp = temp->next;
+		while(CusLNext(cusList, &uploadNode))
+			fprintf(upload, "%s %s %s\n", uploadNode->ID, uploadNode->name, uploadNode->phoneNum);
 	}
-
-	if (temp == NULL) {
-		return;
-	}
-
-	while (temp->next != NULL) {
-		fprintf(upload, "%s %s %s\n", temp->ID, temp->name, temp->phoneNum);
-
-		temp = temp->next;
-	}
-	fprintf(upload, "%s %s %s\n", temp->ID, temp->name, temp->phoneNum);
-
 	fclose(upload);
-	free(temp);
+	free(uploadNode);
 	return;
 }
 
-// DVDList 기록 하기
-void Txtupload_DVDList(void) {
+void Txtupload_DVDList(DVDList *dvdList) {
 
-	dvdInfo *temp = NULL;
-	FILE *upload = fopen("DVDList.txt", "a");
+	dvdInfo *uploadNode;
+	FILE *upload = fopen("DVDList.txt", "w");
 	if (upload == NULL) {
 		printf("DVDList 파일 생성 실패\n");
 		return;
 	}
 
-	temp = (dvdInfo *)malloc(sizeof(dvdInfo));
-	temp = DVD_Head;
+	if (DVDLFirst(dvdList, &uploadNode)) {
+		fprintf(upload, "%s %d %d %s\n", uploadNode->ISBN, uploadNode->genre, uploadNode->rentState, uploadNode->title);
 
-	for (int i = 1; i <= NumOfDVDInfo; i++) {
-		temp = temp->next;
+		while(DVDLNext(dvdList, &uploadNode))
+			fprintf(upload, "%s %d %d %s\n", uploadNode->ISBN, uploadNode->genre, uploadNode->rentState, uploadNode->title);
 	}
-
-	if (temp == NULL) {
-		return;
-	}
-
-	while (temp->next != NULL) {
-		// DVDList.txt
-		// ISBN genre rentstate title 순으로 저장
-		fprintf(upload, "%s %d %d %s\n", temp->ISBN, temp->genre, temp->rentState, temp->title);
-
-		temp = temp->next;
-	}
-	fprintf(upload, "%s %d %d %s\n", temp->ISBN, temp->genre, temp->rentState, temp->title);
-
 	fclose(upload);
-	free(temp);
+	free(uploadNode);
 	return;
 }
 
-// RentList 기록 하기
-void Txtupload_RentList(void) {
+void Txtupload_RentList(RentList *rentList) {
 
-	dvdRentInfo *temp = NULL;
-	FILE *upload = fopen("RentList.txt", "a");
+	RentInfo *uploadNode;
+	FILE *upload = fopen("RentList.txt", "w");
 
 	if (upload == NULL) {
 		printf("RentList 파일 생성 실패\n");
 		return;
 	}
 
-	temp = (dvdRentInfo *)malloc(sizeof(dvdRentInfo));
-	temp = Rent_Head;
+	if (RentLFirst(rentList, &uploadNode)) {
+		fprintf(upload, "%s %s %s %s %d\n", uploadNode->cusID, uploadNode->cusName, uploadNode->cusPhoneNum, uploadNode->ISBN_NUM, uploadNode->rentDay);
 
-	for (int i = 1; i <= NumOfRentInfo; i++) {
-		temp = temp->next;
+		while(RentLNext(rentList, &uploadNode))
+			fprintf(upload, "%s %s %s %s %d\n", uploadNode->cusID, uploadNode->cusName, uploadNode->cusPhoneNum, uploadNode->ISBN_NUM, uploadNode->rentDay);
 	}
-
-	if (temp == NULL) {
-		return;
-	}
-
-	while (temp->next != NULL) {
-		fprintf(upload, "%s %s %s %s %d\n", temp->cusID, temp->cusName, temp->cusPhoneNum, temp->ISBN_NUM, temp->rentDay);
-
-		temp = temp->next;
-	}
-	fprintf(upload, "%s %s %s %s %d\n", temp->cusID, temp->cusName, temp->cusPhoneNum, temp->ISBN_NUM, temp->rentDay);
-
 	fclose(upload);
-	free(temp);
-
+	free(uploadNode);
 	return;
 }
-*/

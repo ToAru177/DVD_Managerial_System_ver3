@@ -14,8 +14,6 @@ typedef struct RentInfo
 	char cusPhoneNum[PHONE_LEN];
 	unsigned int rentDay;
 
-	struct RentInfo *next;
-
 } RentInfo;
 
 #endif // !_RENT_INFO_H_

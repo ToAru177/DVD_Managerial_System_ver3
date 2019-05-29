@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="0_question.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="cusInfoAccess.c" />
     <ClCompile Include="CusLinkedList.c" />
@@ -27,9 +26,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="DVDLinkedList.c" />
-    <ClCompile Include="LinkedList.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="manager.c" />
     <ClCompile Include="RentInfoAccess.c" />
     <ClCompile Include="RentLinkedList.c" />
@@ -45,7 +41,6 @@
     <ClInclude Include="dvdInfo.h" />
     <ClInclude Include="dvdInfoAccess.h" />
     <ClInclude Include="DVDLinkedList.h" />
-    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="RentInfo.h" />
     <ClInclude Include="RentInfoAccess.h" />

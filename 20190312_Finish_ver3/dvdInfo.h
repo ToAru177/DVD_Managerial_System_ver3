@@ -2,7 +2,7 @@
 #define __DVDINFO_H__
 
 #define ISBN_LEN 30
-#define TITLE_LEN 30
+#define TITLE_LEN 50
 
 // 도서 장르 정보
 enum { ACTION = 1, COMIC, SF, ROMANTIC };
@@ -20,7 +20,6 @@ typedef struct dvdInfo
 	// rentList의 저장 위치정보
 	int numOfRentCus;
 	
-	//struct dvdInfo *next;
 } dvdInfo;
 
 
